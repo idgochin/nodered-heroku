@@ -38,6 +38,7 @@
         "node-red-contrib-mongodb4":"latest",
         "node-red-contrib-mongoql":"latest",
         "node-red-contrib-virtual-smart-home":"latest",
+        "node-red-node-sqlite":"latest",
         "redis": "3.0.2",
         "when": "3.7.8"
     }
