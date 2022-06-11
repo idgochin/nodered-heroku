@@ -620,6 +620,21 @@
         "hidden": false
     },
     {
+        "id": "281d37bd237b1bcb",
+        "type": "ui_group",
+        "name": "Group 6",
+        "tab": "1e5f2c4c4d826db9",
+        "order": 6,
+        "disp": true,
+        "width": 6
+    },
+    {
+        "id": "f4303a31a16f613b",
+        "type": "sqlitedb",
+        "db": "/tmp/sqlite",
+        "mode": "RWC"
+    },
+    {
         "id": "5eb0bd6b.74b794",
         "type": "function",
         "z": "2924702c.b33a7",
@@ -2498,5 +2513,206 @@
         "x": 380,
         "y": 540,
         "wires": []
+    },
+    {
+        "id": "1a9b0bd550fc04f0",
+        "type": "http in",
+        "z": "cdd0d95b0f6f8604",
+        "name": "test",
+        "url": "/test",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 170,
+        "y": 680,
+        "wires": [
+            [
+                "fe77fb8711b8756c",
+                "5bf48629c149eb44",
+                "7a6920f324a78e7d"
+            ]
+        ]
+    },
+    {
+        "id": "fe77fb8711b8756c",
+        "type": "debug",
+        "z": "cdd0d95b0f6f8604",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 350,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "5bf48629c149eb44",
+        "type": "http response",
+        "z": "cdd0d95b0f6f8604",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 330,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "7a6920f324a78e7d",
+        "type": "ui_text",
+        "z": "cdd0d95b0f6f8604",
+        "group": "281d37bd237b1bcb",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "text",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 590,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "9b02865251decbb2",
+        "type": "sqlite",
+        "z": "cdd0d95b0f6f8604",
+        "mydb": "f4303a31a16f613b",
+        "sqlquery": "msg.topic",
+        "sql": "",
+        "name": "",
+        "x": 390,
+        "y": 820,
+        "wires": [
+            [
+                "e9873f3b419dcadb"
+            ]
+        ]
+    },
+    {
+        "id": "6422fd8b19c6e50c",
+        "type": "inject",
+        "z": "cdd0d95b0f6f8604",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "CREATE TABLE RANDOMNUM( TIMESTAMP INT PRIMARY KEY NOT NULL, VALUE INT NOT NULL, BOOL INT NOT NULL)",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 820,
+        "wires": [
+            [
+                "9b02865251decbb2"
+            ]
+        ]
+    },
+    {
+        "id": "e9873f3b419dcadb",
+        "type": "debug",
+        "z": "cdd0d95b0f6f8604",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "8c915d72103321ce",
+        "type": "function",
+        "z": "cdd0d95b0f6f8604",
+        "name": "",
+        "func": "var randomNum = Math.round(Math.random() * 100);\nvar largeBool = (randomNum > 50) ? 1 : 0;\nvar newMsg = {\n    \"topic\": \"INSERT INTO RANDOMNUM VALUES ( \" + msg.payload + \", \" + randomNum + \", \" + largeBool + \")\"\n}\n\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 180,
+        "y": 920,
+        "wires": [
+            [
+                "9b02865251decbb2"
+            ]
+        ]
+    },
+    {
+        "id": "3d095439779d351d",
+        "type": "inject",
+        "z": "cdd0d95b0f6f8604",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 80,
+        "y": 880,
+        "wires": [
+            [
+                "8c915d72103321ce"
+            ]
+        ]
+    },
+    {
+        "id": "84e15cc59e8a7361",
+        "type": "inject",
+        "z": "cdd0d95b0f6f8604",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "SELECT * FROM RANDOMNUM ORDER BY TIMESTAMP DESC LIMIT 100;",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 1000,
+        "wires": [
+            [
+                "9b02865251decbb2"
+            ]
+        ]
     }
 ]
